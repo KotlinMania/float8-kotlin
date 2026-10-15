@@ -17,13 +17,11 @@ dependencyResolutionManagement {
 
 rootProject.name = "float8-kotlin"
 
-if (gradle.parent == null) {
-    listOf(
-        "../half-kotlin",
-    ).forEach { path ->
-        if (file(path).exists()) {
-            includeBuild(path)
-        }
+listOf(
+    "../half-kotlin",
+).forEach { path ->
+    if (file(path).exists()) {
+        includeBuild(path)
     }
 }
 
