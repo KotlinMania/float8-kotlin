@@ -2,17 +2,19 @@ package io.github.kotlinmania.float8
 
 import io.github.kotlinmania.half.F16
 import io.github.kotlinmania.half.FpCategory
-import kotlin.math.PI as MATH_PI
-import kotlin.math.E as MATH_E
 import kotlin.math.ln
 import kotlin.math.log10
 import kotlin.math.log2
 import kotlin.math.sqrt
+import kotlin.math.E as MATH_E
+import kotlin.math.PI as MATH_PI
 
 /**
  * Eight bit floating point type with 4-bit exponent and 3-bit mantissa.
  */
-public data class F8E4M3(public val rawBits: UByte = 0u) : Comparable<F8E4M3> {
+public data class F8E4M3(
+    public val rawBits: UByte = 0u,
+) : Comparable<F8E4M3> {
     public val bits: Byte
         get() = rawBits.toByte()
 
@@ -71,19 +73,21 @@ public data class F8E4M3(public val rawBits: UByte = 0u) : Comparable<F8E4M3> {
     public fun copysign(sign: F8E4M3): F8E4M3 =
         F8E4M3(((sign.rawBits.toUInt() and 0x80u) or (rawBits.toUInt() and 0x7Fu)).toUByte())
 
-    public fun signum(): F8E4M3 = when {
-        isNan() -> this
-        (rawBits.toUInt() and 0x80u) != 0u -> NEG_ONE
-        else -> ONE
-    }
+    public fun signum(): F8E4M3 =
+        when {
+            isNan() -> this
+            (rawBits.toUInt() and 0x80u) != 0u -> NEG_ONE
+            else -> ONE
+        }
 
-    public fun classify(): FpCategory = when {
-        isInfinite() -> FpCategory.Infinite
-        isNan() -> FpCategory.Nan
-        (rawBits.toUInt() and 0x7Fu) == 0u -> FpCategory.Zero
-        !isNormal() -> FpCategory.Subnormal
-        else -> FpCategory.Normal
-    }
+    public fun classify(): FpCategory =
+        when {
+            isInfinite() -> FpCategory.Infinite
+            isNan() -> FpCategory.Nan
+            (rawBits.toUInt() and 0x7Fu) == 0u -> FpCategory.Zero
+            !isNormal() -> FpCategory.Subnormal
+            else -> FpCategory.Normal
+        }
 
     public operator fun unaryMinus(): F8E4M3 = fromF32(-toF32())
 

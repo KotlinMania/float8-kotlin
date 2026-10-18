@@ -24,4 +24,3 @@ listOf(
         includeBuild(path)
     }
 }
-

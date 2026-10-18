@@ -31,6 +31,7 @@ internal fun convertToFp8(x: Double, saturate: SaturationType, fp8Interpretation
             fp8OverflowThreshold = 0x407D000000000000uL
             fp8Minnorm = 0x3F90000000000000uL
         }
+
         Kind.E5M2 -> {
             fp8Maxnorm = 0x7Bu
             fp8MantissaMask = 0x3u
@@ -49,39 +50,55 @@ internal fun convertToFp8(x: Double, saturate: SaturationType, fp8Interpretation
     val mantissa: UByte = ((xbits shr (53 - fp8SignificandBits.toInt())) and fp8MantissaMask.toULong()).toUByte()
     val absx: ULong = xbits and 0x7FFFFFFFFFFFFFFFuL
 
-    val res: UByte = when {
-        absx <= fp8MindenormO2 -> 0u
-        absx > dpInfBits -> when (fp8Interpretation) {
-            Kind.E4M3 -> 0x7Fu
-            Kind.E5M2 -> (0x7Eu or mantissa.toUInt()).toUByte()
-        }
-        absx > fp8OverflowThreshold -> when (saturate) {
-            SaturationType.SatFinite -> fp8Maxnorm
-            SaturationType.NoSat -> when (fp8Interpretation) {
-                Kind.E4M3 -> 0x7Fu
-                Kind.E5M2 -> 0x7Cu
+    val res: UByte =
+        when {
+            absx <= fp8MindenormO2 -> {
+                0u
+            }
+
+            absx > dpInfBits -> {
+                when (fp8Interpretation) {
+                    Kind.E4M3 -> 0x7Fu
+                    Kind.E5M2 -> (0x7Eu or mantissa.toUInt()).toUByte()
+                }
+            }
+
+            absx > fp8OverflowThreshold -> {
+                when (saturate) {
+                    SaturationType.SatFinite -> {
+                        fp8Maxnorm
+                    }
+
+                    SaturationType.NoSat -> {
+                        when (fp8Interpretation) {
+                            Kind.E4M3 -> 0x7Fu
+                            Kind.E5M2 -> 0x7Cu
+                        }
+                    }
+                }
+            }
+
+            absx >= fp8Minnorm -> {
+                var r = ((exp.toUInt() shl (fp8SignificandBits.toInt() - 1)) or mantissa.toUInt()) and 0xFFu
+                val round = xbits and ((fp8DpHalfUlp shl 1) - 1uL)
+                if ((round > fp8DpHalfUlp) || ((round == fp8DpHalfUlp) && ((mantissa.toUInt() and 1u) != 0u))) {
+                    r = (r + 1u) and 0xFFu
+                }
+                r.toUByte()
+            }
+
+            else -> {
+                val shift = (1u - exp.toUInt()) and 0xFFu
+                val m = mantissa.toUInt() or (1u shl (fp8SignificandBits.toInt() - 1))
+                var r = (m shr shift.toInt()) and 0xFFu
+                val round = (xbits or (1uL shl 52)) and ((fp8DpHalfUlp shl (shift.toInt() + 1)) - 1uL)
+                val threshold = fp8DpHalfUlp shl shift.toInt()
+                if ((round > threshold) || ((round == threshold) && ((r and 1u) != 0u))) {
+                    r = (r + 1u) and 0xFFu
+                }
+                r.toUByte()
             }
         }
-        absx >= fp8Minnorm -> {
-            var r = ((exp.toUInt() shl (fp8SignificandBits.toInt() - 1)) or mantissa.toUInt()) and 0xFFu
-            val round = xbits and ((fp8DpHalfUlp shl 1) - 1uL)
-            if ((round > fp8DpHalfUlp) || ((round == fp8DpHalfUlp) && ((mantissa.toUInt() and 1u) != 0u))) {
-                r = (r + 1u) and 0xFFu
-            }
-            r.toUByte()
-        }
-        else -> {
-            val shift = (1u - exp.toUInt()) and 0xFFu
-            val m = mantissa.toUInt() or (1u shl (fp8SignificandBits.toInt() - 1))
-            var r = (m shr shift.toInt()) and 0xFFu
-            val round = (xbits or (1uL shl 52)) and ((fp8DpHalfUlp shl (shift.toInt() + 1)) - 1uL)
-            val threshold = fp8DpHalfUlp shl shift.toInt()
-            if ((round > threshold) || ((round == threshold) && ((r and 1u) != 0u))) {
-                r = (r + 1u) and 0xFFu
-            }
-            r.toUByte()
-        }
-    }
 
     return (res.toUInt() or sign.toUInt()).toUByte()
 }
@@ -95,6 +112,7 @@ internal fun convertFp8ToFp16(x: UByte, fp8Interpretation: Kind): UShort {
                 ur = 0x7FFFu
             }
         }
+
         Kind.E4M3 -> {
             val sign = ur and 0x8000u
             var exponent = (((ur and 0x7800u) shr 1) + 0x2000u) and 0xFFFFu
