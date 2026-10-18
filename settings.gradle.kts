@@ -16,11 +16,3 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "float8-kotlin"
-
-listOf(
-    "../half-kotlin",
-).forEach { path ->
-    if (file(path).exists()) {
-        includeBuild(path)
-    }
-}
