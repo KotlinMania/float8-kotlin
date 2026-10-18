@@ -71,3 +71,4 @@ DerivedData/
 *.xcworkspace/xcuserdata/
 *.xcodeproj/xcuserdata/
 local.properties
+deep_symbol_inventory.txt
