@@ -1,0 +1,236 @@
+{
+  "generated_at": "2026-10-20T22:07:13Z",
+  "project": "float8-kotlin",
+  "official_exit": 1,
+  "official_finished_at": "2026-10-20T22:06:57.882818+00:00",
+  "scope": "Gradle dependency proposals; no autoapply, no vulnerability-completeness assertion",
+  "status": "failed",
+  "raw_output_sha256": "8a1a69691140432287d5b7d41a6f7f652e3edd7cca1a2c36fe5b0d85b32a84cb",
+  "event_types": {
+    "update_dependency_list": 1
+  },
+  "dependencies": [
+    {
+      "name": "org.gradle.toolchains.foojay-resolver-convention",
+      "requirements": [
+        {
+          "file": "settings.gradle.kts",
+          "groups": [
+            "plugins"
+          ],
+          "requirement": "1.0.0",
+          "source": null
+        }
+      ],
+      "version": "1.0.0"
+    },
+    {
+      "name": "gradle-wrapper",
+      "requirements": [
+        {
+          "file": "gradle/wrapper/gradle-wrapper.properties",
+          "groups": [],
+          "requirement": "9.8.2",
+          "source": {
+            "property": "distributionUrl",
+            "type": "gradle-distribution",
+            "url": "https://services.gradle.org/distributions/gradle-9.8.2-bin.zip"
+          }
+        },
+        {
+          "file": "gradle/wrapper/gradle-wrapper.properties",
+          "groups": [],
+          "requirement": "21bd5da2de49b642904077f38c0efdc7778e92b3ed0889392dca61b97e389607",
+          "source": {
+            "property": "distributionSha256Sum",
+            "type": "gradle-distribution",
+            "url": "https://services.gradle.org/distributions/gradle-9.8.2-bin.zip.sha256"
+          }
+        }
+      ],
+      "version": "9.8.2"
+    },
+    {
+      "name": "org.jetbrains.kotlinx:kotlinx-coroutines-core",
+      "requirements": [
+        {
+          "file": "gradle/libs.versions.toml",
+          "groups": [],
+          "metadata": {
+            "property_name": "coroutines"
+          },
+          "requirement": "1.11.0",
+          "source": null
+        }
+      ],
+      "version": "1.11.0"
+    },
+    {
+      "name": "org.jetbrains.kotlinx:kotlinx-datetime",
+      "requirements": [
+        {
+          "file": "gradle/libs.versions.toml",
+          "groups": [],
+          "metadata": {
+            "property_name": "datetime"
+          },
+          "requirement": "0.8.0",
+          "source": null
+        }
+      ],
+      "version": "0.8.0"
+    },
+    {
+      "name": "org.jetbrains.kotlinx:kotlinx-collections-immutable",
+      "requirements": [
+        {
+          "file": "gradle/libs.versions.toml",
+          "groups": [],
+          "metadata": {
+            "property_name": "collectionsImmutable"
+          },
+          "requirement": "0.5.2",
+          "source": null
+        }
+      ],
+      "version": "0.5.2"
+    },
+    {
+      "name": "org.jetbrains.kotlinx:kotlinx-benchmark-runtime",
+      "requirements": [
+        {
+          "file": "gradle/libs.versions.toml",
+          "groups": [],
+          "metadata": {
+            "property_name": "kotlinxBenchmark"
+          },
+          "requirement": "0.5.0",
+          "source": null
+        }
+      ],
+      "version": "0.5.0"
+    },
+    {
+      "name": "io.github.kotlinmania:half-kotlin",
+      "requirements": [
+        {
+          "file": "gradle/libs.versions.toml",
+          "groups": [],
+          "metadata": {
+            "property_name": "half"
+          },
+          "requirement": "3.0.0",
+          "source": null
+        }
+      ],
+      "version": "3.0.0"
+    },
+    {
+      "name": "org.jetbrains.kotlin.multiplatform",
+      "requirements": [
+        {
+          "file": "gradle/libs.versions.toml",
+          "groups": [
+            "plugins"
+          ],
+          "metadata": {
+            "property_name": "kotlin"
+          },
+          "requirement": "2.4.20",
+          "source": null
+        }
+      ],
+      "version": "2.4.20"
+    },
+    {
+      "name": "com.android.kotlin.multiplatform.library",
+      "requirements": [
+        {
+          "file": "gradle/libs.versions.toml",
+          "groups": [
+            "plugins"
+          ],
+          "metadata": {
+            "property_name": "androidKmp"
+          },
+          "requirement": "9.4.1",
+          "source": null
+        }
+      ],
+      "version": "9.4.1"
+    },
+    {
+      "name": "dev.detekt",
+      "requirements": [
+        {
+          "file": "gradle/libs.versions.toml",
+          "groups": [
+            "plugins"
+          ],
+          "metadata": {
+            "property_name": "detekt"
+          },
+          "requirement": "2.0.0-alpha.6",
+          "source": null
+        }
+      ],
+      "version": "2.0.0-alpha.6"
+    },
+    {
+      "name": "org.jlleitschuh.gradle.ktlint",
+      "requirements": [
+        {
+          "file": "gradle/libs.versions.toml",
+          "groups": [
+            "plugins"
+          ],
+          "metadata": {
+            "property_name": "ktlint"
+          },
+          "requirement": "14.2.0",
+          "source": null
+        }
+      ],
+      "version": "14.2.0"
+    },
+    {
+      "name": "org.jetbrains.kotlinx.benchmark",
+      "requirements": [
+        {
+          "file": "gradle/libs.versions.toml",
+          "groups": [
+            "plugins"
+          ],
+          "metadata": {
+            "property_name": "kotlinxBenchmark"
+          },
+          "requirement": "0.5.0",
+          "source": null
+        }
+      ],
+      "version": "0.5.0"
+    },
+    {
+      "name": "org.jetbrains.kotlin.plugin.allopen",
+      "requirements": [
+        {
+          "file": "gradle/libs.versions.toml",
+          "groups": [
+            "plugins"
+          ],
+          "metadata": {
+            "property_name": "kotlin"
+          },
+          "requirement": "2.4.20",
+          "source": null
+        }
+      ],
+      "version": "2.4.20"
+    }
+  ],
+  "proposed_updates": [],
+  "errors": [],
+  "applied_updates": 0,
+  "reviewed_for_application": false,
+  "completion_limit": "Official CLI timed out after3m during Kotlin release lookup; dependency inventory only, update/security coverage incomplete"
+}
